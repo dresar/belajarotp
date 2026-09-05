@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kode OTP {{ purpose }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .header h1 {
+            color: #667eea;
+            margin: 0;
+            font-size: 28px;
+        }
+        .otp-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .otp-code {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .verify-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .verify-button:hover {
+            opacity: 0.9;
+        }
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🔐 Kode OTP {{ purpose }}</h1>
+        </div>
+        
+        <p>Halo,</p>
+        <p>Terima kasih telah menggunakan layanan kami. Gunakan kode OTP di bawah ini untuk {{ purpose|lower }}:</p>
+        
+        <div class="otp-box">
+            <div style="font-size: 18px; margin-bottom: 10px;">Kode OTP Anda:</div>
+            <div class="otp-code">{{ otp_code }}</div>
+            <div style="font-size: 14px; opacity: 0.9;">Kode ini berlaku selama 5 menit</div>
+        </div>
+        
+        <div class="button-container">
+            <p style="margin-bottom: 15px;">Atau klik tombol di bawah untuk verifikasi otomatis:</p>
+            <a href="{{ verification_link }}" class="verify-button">
+                ✅ Verifikasi Sekarang
+            </a>
+        </div>
+        
+        <div class="info-box">
+            <strong>📝 Cara Menggunakan:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Masukkan kode OTP di halaman verifikasi, atau</li>
+                <li>Klik tombol "Verifikasi Sekarang" di atas untuk verifikasi otomatis</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Peringatan Keamanan:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Jangan bagikan kode OTP ini kepada siapapun</li>
+                <li>Kode ini hanya berlaku selama 5 menit</li>
+                <li>Jika Anda tidak meminta kode ini, abaikan email ini</li>
+            </ul>
+        </div>
+        
+        <p>Jika Anda mengalami masalah, silakan hubungi tim support kami.</p>
+        
+        <div class="footer">
+            <p>Email ini dikirim secara otomatis, mohon jangan membalas email ini.</p>
+            <p>&copy; 2024 PPT Store. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+

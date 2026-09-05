@@ -1,0 +1,138 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Dashboard - PPT Store Admin{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="mb-0">📊 Dashboard Admin</h2>
+            <p class="text-muted mb-0">Kelola pendaftaran pembelian PPT</p>
+        </div>
+        <a href="{% url 'logout' %}" class="btn btn-danger">
+            🚪 Logout
+        </a>
+    </div>
+    
+    <!-- Statistik Cards -->
+    <div class="row mt-4 mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <h3 class="text-primary">{{ total_pendaftar }}</h3>
+                    <p class="mb-0">Total Pendaftar</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <h3 class="text-warning">{{ pending_count }}</h3>
+                    <p class="mb-0">Menunggu Konfirmasi</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <h3 class="text-info">{{ confirmed_count }}</h3>
+                    <p class="mb-0">Terkonfirmasi</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <h3 class="text-success">{{ completed_count }}</h3>
+                    <p class="mb-0">Selesai</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tombol Aksi -->
+    <div class="mb-4">
+        <a href="{% url 'send_mass_email' %}" class="btn btn-primary btn-lg me-2">
+            📧 Kirim Email Massal
+        </a>
+        <a href="{% url 'ppt_registration' %}" class="btn btn-outline-primary btn-lg" target="_blank">
+            ➕ Form Pendaftaran PPT
+        </a>
+    </div>
+    
+    <!-- List Pendaftar -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">📋 Daftar Pendaftar PPT</h5>
+        </div>
+        <div class="card-body">
+            {% if pendaftar_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No. HP</th>
+                                <th>Paket</th>
+                                <th>Harga</th>
+                                <th>Status</th>
+                                <th>Tanggal Daftar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pendaftar in pendaftar_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><strong>{{ pendaftar.nama }}</strong></td>
+                                <td>{{ pendaftar.email }}</td>
+                                <td>{{ pendaftar.no_hp|default:"-" }}</td>
+                                <td>{{ pendaftar.get_paket_ppt_display }}</td>
+                                <td>Rp {{ pendaftar.get_harga|floatformat:0 }}</td>
+                                <td>
+                                    {% if pendaftar.status == 'pending' %}
+                                        <span class="badge bg-warning">{{ pendaftar.get_status_display }}</span>
+                                    {% elif pendaftar.status == 'confirmed' %}
+                                        <span class="badge bg-info">{{ pendaftar.get_status_display }}</span>
+                                    {% elif pendaftar.status == 'paid' %}
+                                        <span class="badge bg-primary">{{ pendaftar.get_status_display }}</span>
+                                    {% elif pendaftar.status == 'completed' %}
+                                        <span class="badge bg-success">{{ pendaftar.get_status_display }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ pendaftar.created_at|date:"d/m/Y H:i" }}</td>
+                            </tr>
+                            {% if pendaftar.catatan %}
+                            <tr>
+                                <td colspan="8" class="text-muted small">
+                                    <strong>Catatan:</strong> {{ pendaftar.catatan }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <p class="mb-0">Belum ada pendaftar. <a href="{% url 'ppt_registration' %}">Klik di sini</a> untuk melihat form pendaftaran.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Info Akun -->
+    <div class="mt-4 p-3 bg-light rounded">
+        <h6>Info Akun Admin</h6>
+        <p class="mb-1"><strong>Email:</strong> {{ user.email }}</p>
+        <p class="mb-0"><strong>Login Terakhir:</strong> 
+            {% if user.last_login %}
+                {{ user.last_login|date:"d F Y, H:i" }}
+            {% else %}
+                <span class="text-muted">Belum pernah login</span>
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}

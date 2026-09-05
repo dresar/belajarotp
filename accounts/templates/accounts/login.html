@@ -1,0 +1,52 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Login - PPT Store{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>🔐 Login Admin</h2>
+        <p>Masuk ke dashboard admin</p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.email.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 mb-3">
+            Kirim Kode OTP
+        </button>
+        
+        <div class="text-center mb-3">
+            <p class="mb-0">Belum punya akun admin? <a href="{% url 'register' %}" class="text-decoration-none">Daftar di sini</a></p>
+            <p class="mb-0 mt-2"><a href="{% url 'forgot_password' %}" class="text-decoration-none">🔑 Lupa Password?</a></p>
+        </div>
+    </form>
+    
+    <hr class="my-4">
+    
+    <div class="text-center">
+        <h5 class="mb-3">📦 Ingin Membeli PPT?</h5>
+        <a href="{% url 'ppt_registration' %}" class="btn btn-success btn-lg w-100">
+            🛒 Daftar Pembelian PPT
+        </a>
+    </div>
+    
+    <div class="mt-4 p-3 bg-light rounded">
+        <small class="text-muted">
+            <strong>Info:</strong> Kode OTP akan dikirim ke email Anda dan muncul di terminal/console server Django.
+        </small>
+    </div>
+</div>
+{% endblock %}

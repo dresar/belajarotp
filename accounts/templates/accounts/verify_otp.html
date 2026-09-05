@@ -1,0 +1,80 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Verifikasi OTP - Django OTP Authentication{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>🔑 Verifikasi OTP</h2>
+        <p>
+            {% if purpose == 'registration' %}
+                Masukkan kode OTP untuk mengaktifkan akun
+            {% else %}
+                Masukkan kode OTP untuk login
+            {% endif %}
+        </p>
+        <p class="text-muted small mb-0">Email: <strong>{{ email }}</strong></p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="{{ form.otp_code.id_for_label }}" class="form-label">{{ form.otp_code.label }}</label>
+            {{ form.otp_code }}
+            {% if form.otp_code.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.otp_code.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="form-text">Masukkan 6 digit kode OTP yang dikirim ke email Anda</div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 mb-3">
+            Verifikasi
+        </button>
+        
+        <div class="text-center">
+            {% if purpose == 'registration' %}
+                <a href="{% url 'register' %}" class="text-decoration-none">Kirim ulang kode OTP</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="text-decoration-none">Kirim ulang kode OTP</a>
+            {% endif %}
+        </div>
+    </form>
+    
+    <div class="mt-4 p-3 bg-info bg-opacity-10 rounded">
+        <h6 class="mb-2">💡 Cara Verifikasi:</h6>
+        <ul class="mb-2 small">
+            <li><strong>Opsi 1:</strong> Masukkan kode OTP di atas</li>
+            <li><strong>Opsi 2:</strong> Klik link verifikasi di email yang dikirim</li>
+        </ul>
+        <small class="text-muted">
+            <strong>Penting:</strong> Kode OTP berlaku selama 5 menit. Cek email Anda untuk kode OTP atau link verifikasi.
+        </small>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Auto focus dan format input OTP
+    document.addEventListener('DOMContentLoaded', function() {
+        const otpInput = document.getElementById('{{ form.otp_code.id_for_label }}');
+        if (otpInput) {
+            otpInput.focus();
+            otpInput.addEventListener('input', function(e) {
+                // Hanya angka
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                // Maksimal 6 digit
+                if (e.target.value.length > 6) {
+                    e.target.value = e.target.value.slice(0, 6);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}
+

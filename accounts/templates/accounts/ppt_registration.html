@@ -1,0 +1,94 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Daftar Pembelian PPT - PPT Store{% endblock %}
+
+{% block content %}
+<div class="auth-container" style="max-width: 600px;">
+    <div class="auth-header">
+        <h2>📦 Daftar Pembelian PPT</h2>
+        <p>Isi form di bawah untuk mendaftar pembelian PPT</p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.email.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.nama.id_for_label }}" class="form-label">{{ form.nama.label }}</label>
+            {{ form.nama }}
+            {% if form.nama.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.nama.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.no_hp.id_for_label }}" class="form-label">{{ form.no_hp.label }}</label>
+            {{ form.no_hp }}
+            {% if form.no_hp.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.no_hp.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.paket_ppt.id_for_label }}" class="form-label">{{ form.paket_ppt.label }}</label>
+            {{ form.paket_ppt }}
+            {% if form.paket_ppt.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.paket_ppt.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.catatan.id_for_label }}" class="form-label">{{ form.catatan.label }}</label>
+            {{ form.catatan }}
+            {% if form.catatan.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.catatan.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 mb-3">
+            📝 Daftar Sekarang
+        </button>
+        
+        <div class="text-center">
+            <a href="{% url 'home' %}" class="text-decoration-none">← Kembali ke Halaman Utama</a>
+        </div>
+    </form>
+    
+    <div class="mt-4 p-3 bg-info bg-opacity-10 rounded">
+        <h6 class="mb-2">📋 Paket yang Tersedia:</h6>
+        <ul class="mb-0 small">
+            <li><strong>Paket Basic:</strong> Rp 50.000</li>
+            <li><strong>Paket Premium:</strong> Rp 100.000</li>
+            <li><strong>Paket Enterprise:</strong> Rp 200.000</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+

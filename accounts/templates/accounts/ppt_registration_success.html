@@ -1,0 +1,24 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Pendaftaran Berhasil - PPT Store{% endblock %}
+
+{% block content %}
+<div class="auth-container" style="max-width: 500px;">
+    <div class="auth-header">
+        <h2 class="text-success">✅ Pendaftaran Berhasil!</h2>
+        <p>Terima kasih telah mendaftar</p>
+    </div>
+    
+    <div class="alert alert-success">
+        <h5 class="alert-heading">🎉 Pendaftaran Anda Telah Diterima!</h5>
+        <p class="mb-0">Kami telah mengirimkan email konfirmasi ke alamat email Anda. Tim kami akan segera menghubungi Anda untuk proses selanjutnya.</p>
+    </div>
+    
+    <div class="text-center">
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            ← Kembali ke Halaman Utama
+        </a>
+    </div>
+</div>
+{% endblock %}
+

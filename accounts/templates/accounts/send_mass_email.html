@@ -1,0 +1,79 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Kirim Email Massal - PPT Store Admin{% endblock %}
+
+{% block content %}
+<div class="dashboard-container" style="max-width: 800px;">
+    <div class="dashboard-header">
+        <h2 class="mb-0">📧 Kirim Email Massal</h2>
+        <p class="text-muted mb-0">Kirim email ke semua atau sebagian pendaftar</p>
+    </div>
+    
+    <div class="alert alert-info mt-4">
+        <strong>Info:</strong> Email akan dikirim ke semua penerima yang sesuai dengan filter yang Anda pilih. 
+        Nama penerima akan otomatis disisipkan di awal pesan.
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="{{ form.recipient_type.id_for_label }}" class="form-label">{{ form.recipient_type.label }}</label>
+            {{ form.recipient_type }}
+            {% if form.recipient_type.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.recipient_type.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="form-text">Pilih kategori penerima email</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.subject.id_for_label }}" class="form-label">{{ form.subject.label }}</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.subject.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.message.id_for_label }}" class="form-label">{{ form.message.label }}</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+                <div class="text-danger small mt-1">
+                    {% for error in form.message.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="form-text">Pesan akan otomatis diawali dengan "Halo [Nama]," dan diakhiri dengan detail pendaftaran.</div>
+        </div>
+        
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">
+                📤 Kirim Email
+            </button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">
+                ← Kembali ke Dashboard
+            </a>
+        </div>
+    </form>
+    
+    <div class="mt-4 p-3 bg-warning bg-opacity-10 rounded">
+        <h6 class="mb-2">⚠️ Perhatian:</h6>
+        <ul class="mb-0 small">
+            <li>Pastikan email server sudah dikonfigurasi dengan benar di settings.py</li>
+            <li>Untuk testing, gunakan Console Email Backend (email muncul di terminal)</li>
+            <li>Untuk production, gunakan SMTP Email Backend</li>
+            <li>Email akan dikirim satu per satu ke setiap penerima</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
